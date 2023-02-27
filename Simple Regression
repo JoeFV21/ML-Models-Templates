@@ -1,0 +1,32 @@
+import csv
+import numpy as np
+
+# Read the CSV file into a numpy array
+with open('path/to/file.csv') as f:
+    reader = csv.reader(f)
+    data = list(reader)
+data = np.array(data).astype(float)
+
+# Split the data into input and output variables
+X = data[:, :-1]
+y = data[:, -1]
+
+# Add a column of ones to X for the bias term
+X = np.hstack((np.ones((X.shape[0], 1)), X))
+
+# Define the linear regression function
+def linear_regression(X, y):
+    # Calculate the optimal weights using the normal equation
+    w = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(y)
+    return w
+
+# Train the linear regression model on the data
+w = linear_regression(X, y)
+
+# Make predictions on new data
+new_data = np.array([[1, 2, 3], [4, 5, 6]])
+new_data = np.hstack((np.ones((new_data.shape[0], 1)), new_data))
+predictions = new_data.dot(w)
+
+# Print the predicted values
+print(predictions)
