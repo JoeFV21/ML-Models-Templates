@@ -1,0 +1,24 @@
+import pandas as pd
+import numpy as np
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+# Load data
+data = pd.read_csv('path/to/dataset.csv')
+
+# Choose number of clusters (k)
+k = 3
+
+# Apply K-Means algorithm
+kmeans = KMeans(n_clusters=k).fit(data)
+
+# Get cluster labels
+labels = kmeans.labels_
+
+# Get cluster centers
+centers = kmeans.cluster_centers_
+
+# Visualize clusters
+plt.scatter(data['x'], data['y'], c=labels, s=50, cmap='viridis')
+plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
+plt.show()
