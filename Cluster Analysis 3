@@ -1,0 +1,19 @@
+from sklearn.experimental import enable_hist_gradient_boosting
+from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.cluster import AgglomerativeClustering
+import matplotlib.pyplot as plt
+
+# Generate sample data
+X = np.random.rand(100, 2)
+
+# Perform clustering with HistGradientBoostingClassifier
+hist_gb = HistGradientBoostingClassifier(n_estimators=100, learning_rate=0.1)
+hist_gb.fit(X, np.zeros(X.shape[0]))
+
+# Perform hierarchical clustering on leaf nodes
+agg = AgglomerativeClustering(n_clusters=3)
+agg.fit(hist_gb._predict(X))
+
+# Visualize the results
+plt.scatter(X[:, 0], X[:, 1], c=agg.labels_, cmap='viridis')
+plt.show()
