@@ -1,0 +1,18 @@
+import pandas as pd
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+# Load data from a CSV file
+df = pd.read_csv('my_data.csv')
+
+# Select only the numeric columns for clustering
+X = df.select_dtypes(include=['float', 'int'])
+
+# Perform clustering with k-means algorithm
+kmeans = KMeans(n_clusters=3)
+kmeans.fit(X)
+
+# Visualize the results
+plt.scatter(X.iloc[:, 0], X.iloc[:, 1], c=kmeans.labels_, cmap='viridis')
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], marker='x', s=200, linewidths=3, color='r')
+plt.show()
